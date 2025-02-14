@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "devStart": "nodemon script.ts", 
     "dev": "nodemon backend/server.js"
   },
   "type": "module",
