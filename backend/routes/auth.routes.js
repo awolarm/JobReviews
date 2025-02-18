@@ -9,4 +9,6 @@ router.get("/login", login);
 
 router.get("/logout", logout); 
 
+// you have to change get to post later on!!
+
 export default router; 
