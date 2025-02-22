@@ -3,6 +3,11 @@ import { Box, Button, Container, Input, Heading, VStack } from '@chakra-ui/react
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control'; 
 
+const API_CONFIG = {
+    BASE_URL: 'http://localhost:5000', 
+    SIGNUP_ENDPOINT: '/api/auth/signup'//or may it is '/api/auth/signup'
+}
+
 const SignupPage = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -15,10 +20,6 @@ const SignupPage = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastStatus, setToastStatus] = useState('');
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   useEffect(() => {
     if (showToast) {
@@ -49,8 +50,22 @@ const SignupPage = () => {
     }
 
     try {
-        //make API call here
-        console.log('Form submitted', formData); 
+        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
+            method: 'POST', 
+            headers: {
+                'Content-Type' : 'application/json', 
+            },
+            body : JSON.stringify({
+                username: formData.username, 
+                email: formData.email, 
+                password: formData.password 
+            })
+        }); 
+
+        if(!response.ok) {
+            const errorData = await response.json(); 
+            throw new Error(errorData.message || 'Failed to create account '); 
+        }
         setToastMessage("Account created successfully!");
         setToastStatus("success");
         setShowToast(true);
