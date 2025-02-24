@@ -5,11 +5,8 @@ const prisma = new PrismaClient()
 
 export const signup = async (req, res) => {
     try {
-        console.log("hello")
-        // 1. Extract user data from request body
         const { username, email, password } = req.body;
 
-        // 2. Validate input
         if (!username || !email || !password) {
             return res.status(400).json({
                 error: "All fields are required"
@@ -17,20 +14,20 @@ export const signup = async (req, res) => {
         }
 
 
-        // const existingUser = await prisma.user.findFirst({
-        //     where: {
-        //         OR: [
-        //             { email },
-        //             { username }
-        //         ]
-        //     }
-        // });
+        const existingUser = await prisma.user.findFirst({
+            where: {
+              OR: [
+                { name: { equals: username, mode: 'insensitive' } },
+                { email: { equals: email, mode: 'insensitive' } }
+              ]
+            }
+          });
 
-        // if (existingUser) {
-        //     return res.status(400).json({
-        //         error: "User already exists"
-        //     });
-        // }
+        if (existingUser) {
+            return res.status(400).json({
+                message: "User already exists"
+            });
+        }
 
         // 4. Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
