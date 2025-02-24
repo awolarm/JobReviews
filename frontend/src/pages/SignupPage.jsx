@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Button, Container, Input, Heading, VStack, useColorMode, Text } from '@chakra-ui/react';
+import { Box, Button, Container, Input, VStack, useColorMode, Text } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control'; 
 
@@ -85,7 +85,7 @@ const SignupPage = () => {
   };
 
   return (
-    <Container maxW="container.sm" py={10}>
+    <Container maxW="container.sm" py={10} >
       {showToast && (
         <Box
           position="fixed"

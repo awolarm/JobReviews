@@ -3,10 +3,12 @@ import { Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'; 
 import SignupPage from './pages/SignupPage';
+import NavBar from './components/Navbar';
 
 const App = () => {
     return (
         <Box minH={"100wh"}>
+            <NavBar/>
             <Routes>
                 <Route path="/" element={<HomePage/>}/> 
                 <Route path="/login" element={<LoginPage/>}/> 
