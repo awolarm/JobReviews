@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Button, Container, Input, Heading, VStack, useColorMode } from '@chakra-ui/react';
+import { Box, Button, Container, Input, Heading, VStack, useColorMode, Text } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control'; 
 
@@ -102,9 +102,6 @@ const SignupPage = () => {
       )}
       
       <VStack spacing={8}>
-        <Heading as="h1" size="2xl" textAlign="center" mb={8} color={textColor}>
-          SignUp
-        </Heading>
         <Box
           w="full"
           bg={formBg}
@@ -116,6 +113,9 @@ const SignupPage = () => {
         >
           <form onSubmit={handleSubmit}>
             <VStack spacing={6}>
+                <Text fontSize='50px' color={textColor}>
+                    Sign Up
+                </Text>
                 <FormControl>
                     <FormLabel color={textColor}>Username</FormLabel>
                     <Input
