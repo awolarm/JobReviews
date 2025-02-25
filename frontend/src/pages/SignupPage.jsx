@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Button, Container, Input, VStack, useColorMode, Text } from '@chakra-ui/react';
+import { Box, Button, Container, Input, VStack, Text } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control'; 
 
@@ -9,8 +9,8 @@ const API_CONFIG = {
 }
 
 const SignupPage = () => {
-  const { colorMode } = useColorMode();
-  const isDark = colorMode === 'dark';
+ // const { colorMode } = useColorMode();
+ // const isDark = colorMode === 'dark';
   const formBg = useColorModeValue("white", "gray.700");
   const inputBg = useColorModeValue("gray.50", "gray.600");
   const textColor = useColorModeValue("gray.800", "white");
@@ -124,6 +124,7 @@ const SignupPage = () => {
                       value={formData.username}
                       onChange={handleChange}
                       placeholder="Enter your username"
+                      _placeholder={{color : "gray.500"}}
                       required
                       bg={inputBg}
                       color={textColor}
@@ -141,6 +142,7 @@ const SignupPage = () => {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Enter your email"
+                      _placeholder={{color : "gray.500"}}
                       required
                       bg={inputBg}
                       color={textColor}
@@ -158,6 +160,7 @@ const SignupPage = () => {
                       value={formData.password}
                       onChange={handleChange}
                       placeholder="Enter your password"
+                      _placeholder={{color : "gray.500"}}
                       required 
                       bg={inputBg}
                       color={textColor}
@@ -175,6 +178,7 @@ const SignupPage = () => {
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       placeholder="Confirm your password"
+                      _placeholder={{color : "gray.500"}}
                       required 
                       bg={inputBg}
                       color={textColor}
@@ -187,7 +191,7 @@ const SignupPage = () => {
                 <Button 
                   type="submit"
                   isLoading={isLoading}
-                  colorScheme="blue"
+                  colorScheme={ useColorModeValue("blue", "teal")}
                   size="lg"
                   width="full"
                   mt={4}
