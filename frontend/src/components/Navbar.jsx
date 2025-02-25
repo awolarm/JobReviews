@@ -1,9 +1,10 @@
-import { Button, Container, Flex, HStack, Text, useColorMode} from '@chakra-ui/react'; 
+import { Button, Container, Flex, HStack, Text, useColorMode, Menu, MenuButton, MenuList, MenuItem, MenuDivider} from '@chakra-ui/react'; 
 import {Link} from "react-router-dom"; 
 
-import { PlusSquareIcon } from "@chakra-ui/icons"; 
+import { PlusSquareIcon, ChevronDownIcon  } from "@chakra-ui/icons"; 
 import { IoMoon } from "react-icons/io5"; 
 import { LuSun } from "react-icons/lu"; 
+import { FiUser } from "react-icons/fi";
 
 const Navbar = () => {
     const {colorMode, toggleColorMode} = useColorMode(); 
@@ -32,14 +33,33 @@ const Navbar = () => {
             </Text>
 
             <HStack spacing={2} alignItems={"center"}>
-                <Link to={"signup"}>
+                {/* <Link to={"signup"}>
                 <Button>
                     <PlusSquareIcon fontSize={20}/> 
                 </Button>
-                </Link>
+                </Link> */}
                 <Button onClick={toggleColorMode}>
                     {colorMode === "light" ? <IoMoon/> : <LuSun size="20"/>}
                 </Button>
+
+                <Menu>
+                    <MenuButton
+                        as={Button}
+                        rightIcon={<ChevronDownIcon/>}
+                        leftIcon={<FiUser/>}
+                    >
+                        Account
+                    </MenuButton>
+                    <MenuList>
+                        <Link to = "signup">
+                            <MenuItem>Sign Up</MenuItem>
+                        </Link>
+                        <MenuDivider/>
+                        <Link to = "login">
+                            <MenuItem>Log In</MenuItem>
+                        </Link>
+                    </MenuList>
+                </Menu>
             </HStack>
 
         </Flex>
