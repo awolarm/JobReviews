@@ -9,8 +9,6 @@ const API_CONFIG = {
 }
 
 const SignupPage = () => {
- // const { colorMode } = useColorMode();
- // const isDark = colorMode === 'dark';
   const formBg = useColorModeValue("white", "gray.700");
   const inputBg = useColorModeValue("gray.50", "gray.600");
   const textColor = useColorModeValue("gray.800", "white");
