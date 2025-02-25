@@ -1,6 +1,10 @@
+import { Button, Stack } from '@chakra-ui/react'
+
 const HomePage = () => {
     return(
-        <div>HomePage</div>
+        <div>
+            <h1>Homepage</h1>
+        </div>
     )
 }
 

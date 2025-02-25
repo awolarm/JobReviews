@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Box, Button, Container, Input, Heading, VStack } from '@chakra-ui/react';
+import { Box, Button, Container, Input, VStack, Text } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control'; 
 
 const API_CONFIG = {
     BASE_URL: 'http://localhost:5000', 
-    SIGNUP_ENDPOINT: '/api/auth/signup'//or may it is '/api/auth/signup'
+    SIGNUP_ENDPOINT: '/api/auth/signup'
 }
 
 const SignupPage = () => {
+ // const { colorMode } = useColorMode();
+ // const isDark = colorMode === 'dark';
+  const formBg = useColorModeValue("white", "gray.700");
+  const inputBg = useColorModeValue("gray.50", "gray.600");
+  const textColor = useColorModeValue("gray.800", "white");
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -79,7 +85,7 @@ const SignupPage = () => {
   };
 
   return (
-    <Container maxW="container.sm">
+    <Container maxW="container.sm" py={10} >
       {showToast && (
         <Box
           position="fixed"
@@ -96,75 +102,101 @@ const SignupPage = () => {
       )}
       
       <VStack spacing={8}>
-        <Heading as="h1" size="2xl" textAlign="center" mb={8}>
-          SignUp
-        </Heading>
         <Box
           w="full"
-          bg={useColorModeValue("white", "gray.800")}
-          p={6}
+          bg={formBg}
+          p={8}
           rounded="lg"
-          shadow="md"
+          shadow="lg"
+          borderWidth="1px"
+          borderColor={useColorModeValue("gray.200", "gray.600")}
         >
           <form onSubmit={handleSubmit}>
-            <VStack spacing={4}>
+            <VStack spacing={6}>
+                <Text fontSize='50px' color={textColor}>
+                    Sign Up
+                </Text>
                 <FormControl>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel color={textColor}>Username</FormLabel>
                     <Input
-                    name="username"
-                    type="text"
-                    value={formData.username}
-                    onChange={handleChange}
-                    placeholder="Enter your username"
-                    required
-                    className="w-full p-2 border rounded"
+                      name="username"
+                      type="text"
+                      value={formData.username}
+                      onChange={handleChange}
+                      placeholder="Enter your username"
+                      _placeholder={{color : "gray.500"}}
+                      required
+                      bg={inputBg}
+                      color={textColor}
+                      borderColor={useColorModeValue("gray.300", "gray.500")}
+                      _hover={{ borderColor: useColorModeValue("gray.400", "gray.400") }}
+                      _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
                     />
                 </FormControl>
 
                 <FormControl>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel color={textColor}>Email</FormLabel>
                     <Input  
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="Enter your email"
-                        required
-                        className="w-full p-2 border rounded"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Enter your email"
+                      _placeholder={{color : "gray.500"}}
+                      required
+                      bg={inputBg}
+                      color={textColor}
+                      borderColor={useColorModeValue("gray.300", "gray.500")}
+                      _hover={{ borderColor: useColorModeValue("gray.400", "gray.400") }}
+                      _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
                     />
                 </FormControl>
 
                 <FormControl>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel color={textColor}>Password</FormLabel>
                     <Input
-                        name="password"
-                        type="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        placeholder="Enter your password"
-                        required 
-                        className="w-full p-2 border rounded"
+                      name="password"
+                      type="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder="Enter your password"
+                      _placeholder={{color : "gray.500"}}
+                      required 
+                      bg={inputBg}
+                      color={textColor}
+                      borderColor={useColorModeValue("gray.300", "gray.500")}
+                      _hover={{ borderColor: useColorModeValue("gray.400", "gray.400") }}
+                      _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
                     />
                 </FormControl>
 
                 <FormControl>
-                    <FormLabel>Confirm Password</FormLabel>
+                    <FormLabel color={textColor}>Confirm Password</FormLabel>
                     <Input
-                        name="confirmPassword"
-                        type="password"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        placeholder="Confirm your password"
-                        required 
-                        className="w-full p-2 border rounded"
-                    /> 
+                      name="confirmPassword"
+                      type="password"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      placeholder="Confirm your password"
+                      _placeholder={{color : "gray.500"}}
+                      required 
+                      bg={inputBg}
+                      color={textColor}
+                      borderColor={useColorModeValue("gray.300", "gray.500")}
+                      _hover={{ borderColor: useColorModeValue("gray.400", "gray.400") }}
+                      _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                    />
                 </FormControl>
 
                 <Button 
-                    type="submit"
-                    isLoading={isLoading}
+                  type="submit"
+                  isLoading={isLoading}
+                  colorScheme={ useColorModeValue("blue", "teal")}
+                  size="lg"
+                  width="full"
+                  mt={4}
                 > 
-                    Sign Up 
+                  Sign Up 
                 </Button> 
             </VStack>
           </form>
