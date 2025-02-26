@@ -5,7 +5,7 @@ import { FormControl, FormLabel} from '@chakra-ui/form-control';
 
 const API_CONFIG = {
     BASE_URL: 'http://localhost:5000', 
-    SIGNUP_ENDPOINT: 'api/auth/login'
+    SIGNUP_ENDPOINT: '/api/auth/login'
 }
 
 const LoginPage = () => {
@@ -39,9 +39,9 @@ const LoginPage = () => {
         }); 
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); 
-        console.log(formData);
+        setIsLoading(true);
 
         if(!formData.email || !formData.password){
             setToastMessage("All fields required");
@@ -50,23 +50,36 @@ const LoginPage = () => {
             setIsLoading(false); 
             return; 
         }
-
+        
         try {
-            // const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
-            //     method: 'POST', 
-            //     headers: {
-            //         'Content-Type' : 'application/json', 
-            //     }, 
-            //     body : JSON.stringify({
-            //         email: formData.email, 
-            //         password: formData.password
-            //     })
-            // }); 
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type' : 'application/json', 
+                }, 
+                body : JSON.stringify({
+                    email: formData.email, 
+                    password: formData.password
+                })
+            }); 
+
+            if(!response.ok){
+                const errorData = await response.json(); 
+                throw new Error(errorData.message); 
+            }
+
+            const responseData = await response.json(); 
+            setToastMessage(responseData.message);
+            setToastStatus("success");
+            setShowToast(true);
 
         }catch(error){
+            setToastMessage(error.message); 
+            setToastStatus("error"); 
+            setShowToast(true);
 
         }finally{
-
+            setIsLoading(false); 
         }
     }; 
 

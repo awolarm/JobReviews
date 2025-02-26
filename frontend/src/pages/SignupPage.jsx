@@ -52,7 +52,7 @@ const SignupPage = () => {
         setIsLoading(false); 
         return; 
     }
-
+  
 
     try {
         const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
