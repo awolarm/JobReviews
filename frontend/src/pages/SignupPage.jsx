@@ -71,7 +71,8 @@ const SignupPage = () => {
             const errorData = await response.json(); 
             throw new Error(errorData.message || 'Failed to create account '); 
         }
-        setToastMessage("Account created successfully!");
+        const responseData = await response.json(); 
+        setToastMessage(responseData.message);
         setToastStatus("success");
         setShowToast(true);
     } catch(error) {
