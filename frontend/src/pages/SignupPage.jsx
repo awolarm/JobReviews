@@ -53,6 +53,7 @@ const SignupPage = () => {
         return; 
     }
 
+
     try {
         const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
             method: 'POST', 
@@ -123,7 +124,7 @@ const SignupPage = () => {
                       onChange={handleChange}
                       placeholder="Enter your username"
                       _placeholder={{color : "gray.500"}}
-                      required
+                      
                       bg={inputBg}
                       color={textColor}
                       borderColor={useColorModeValue("gray.300", "gray.500")}
@@ -141,7 +142,7 @@ const SignupPage = () => {
                       onChange={handleChange}
                       placeholder="Enter your email"
                       _placeholder={{color : "gray.500"}}
-                      required
+                      
                       bg={inputBg}
                       color={textColor}
                       borderColor={useColorModeValue("gray.300", "gray.500")}
@@ -159,7 +160,7 @@ const SignupPage = () => {
                       onChange={handleChange}
                       placeholder="Enter your password"
                       _placeholder={{color : "gray.500"}}
-                      required 
+                       
                       bg={inputBg}
                       color={textColor}
                       borderColor={useColorModeValue("gray.300", "gray.500")}
@@ -177,7 +178,7 @@ const SignupPage = () => {
                       onChange={handleChange}
                       placeholder="Confirm your password"
                       _placeholder={{color : "gray.500"}}
-                      required 
+                       
                       bg={inputBg}
                       color={textColor}
                       borderColor={useColorModeValue("gray.300", "gray.500")}

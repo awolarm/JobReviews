@@ -9,7 +9,7 @@ export const signup = async (req, res) => {
 
         if (!username || !email || !password) {
             return res.status(400).json({
-                error: "All fields are required"
+                message: "All fields are required"
             });
         }
 
@@ -56,15 +56,24 @@ export const signup = async (req, res) => {
     } catch (error) {
         console.error('Signup error:', error);
         res.status(500).json({
-            error: "Internal server error"
+            message: "Internal server error"
         });
     }
 };
 
 export const login = async (req, res) => {
-    res.json({
-        data: "you hit the login endpoint", 
-    })
+    try{
+        const {email, password} = req.body; 
+
+        if(!email|| !password) {
+            return res.status(400).json({
+                error: "All fields are required"
+            })
+        }
+
+    } catch(error) {
+
+    }
 }
 
 export const logout = async (req, res) => {

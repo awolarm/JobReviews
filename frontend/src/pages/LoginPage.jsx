@@ -3,6 +3,11 @@ import { Box, Button, Container, Input, VStack, Text } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control';
 
+const API_CONFIG = {
+    BASE_URL: 'http://localhost:5000', 
+    SIGNUP_ENDPOINT: 'api/auth/login'
+}
+
 const LoginPage = () => {
     const formBg = useColorModeValue("white", "gray.700"); 
     const inputBg = useColorModeValue("gray.50", "gray.600"); 
@@ -37,7 +42,33 @@ const LoginPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault(); 
         console.log(formData);
-    }
+
+        if(!formData.email || !formData.password){
+            setToastMessage("All fields required");
+            setToastStatus("error");
+            setShowToast(true);
+            setIsLoading(false); 
+            return; 
+        }
+
+        try {
+            // const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
+            //     method: 'POST', 
+            //     headers: {
+            //         'Content-Type' : 'application/json', 
+            //     }, 
+            //     body : JSON.stringify({
+            //         email: formData.email, 
+            //         password: formData.password
+            //     })
+            // }); 
+
+        }catch(error){
+
+        }finally{
+
+        }
+    }; 
 
 
 
@@ -52,7 +83,7 @@ const LoginPage = () => {
                     bg={toastStatus === 'error' ? 'red.500' : 'green.500'}
                     color="white"
                     borderRadius="md"
-                    zIndex="tost"
+                    zIndex="toast"
                 
                 >
                     {toastMessage}
@@ -82,7 +113,7 @@ const LoginPage = () => {
                                     onChange={handleChange}
                                     placeholder="Enter your email"
                                     _placeholder={{color: "gray.500"}}
-                                    required
+                                    
                                     bg={inputBg}
                                     color={textColor}
                                     borderColor={useColorModeValue("gray.300", "gray.500")}
@@ -99,7 +130,7 @@ const LoginPage = () => {
                                     onChange={handleChange}
                                     placeholder="Enter your password"
                                     _placeholder={{color : "gray.500"}}
-                                    required 
+                                    
                                     bg={inputBg}
                                     color={textColor}
                                     borderColor={useColorModeValue("gray.300", "gray.500")}
@@ -115,7 +146,7 @@ const LoginPage = () => {
                                 width="full"
                                 mt={4}
                             > 
-                                Sign Up 
+                                Log in 
                             </Button> 
                         </VStack>
                     </form>
