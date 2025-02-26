@@ -29,7 +29,7 @@ const Navbar = () => {
                 bgGradient={"linear(to-r, yellow.400, orange.500)"}
                 bgClip={"text"}
             >
-                <Link to={"/"}>Bored2</Link>
+                <Link to={"/"}>JobReviews</Link>
             </Text>
 
             <HStack spacing={2} alignItems={"center"}>
