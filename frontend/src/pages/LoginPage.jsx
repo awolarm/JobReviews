@@ -10,6 +10,7 @@ const API_CONFIG = {
 }
 
 const LoginPage = () => {
+    const navigate = useNavigate();
     const formBg = useColorModeValue("white", "gray.700"); 
     const inputBg = useColorModeValue("gray.50", "gray.600"); 
     const textColor = useColorModeValue("gray.800", "white"); 
@@ -73,6 +74,10 @@ const LoginPage = () => {
             setToastMessage(responseData.message);
             setToastStatus("success");
             setShowToast(true);
+
+            setTimeout(() => {
+                navigate('/');
+            }, 500);
 
         }catch(error){
             setToastMessage(error.message); 
