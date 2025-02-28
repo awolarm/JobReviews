@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Box, Button, Container, Input, VStack, Text } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control';
+import { useNavigate } from 'react-router-dom';
 
 const API_CONFIG = {
     BASE_URL: 'http://localhost:5000', 
