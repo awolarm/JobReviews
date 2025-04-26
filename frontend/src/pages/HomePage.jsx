@@ -53,24 +53,24 @@ const HomePage = () => {
             
             {/* Search input */}
             <InputGroup 
-                maxW="700px"  // Increased from 500px
+                maxW="700px"  
                 zIndex="1"
-                size="lg"     // This will make the entire input group larger
+                size="lg"     
             >
                 <InputLeftElement
                     pointerEvents="none"
-                    children={<SearchIcon color="gray.300" fontSize="20px" />} // Increased icon size
-                    h="full"  // Make sure icon is vertically centered
+                    children={<SearchIcon color="gray.300" fontSize="20px" />} 
+                    h="full"  
                 />
                 <Input
                     bg="black !important"
                     color="white !important"
                     placeholder="Company Name"
                     size="lg"
-                    height="70px"  // Increased height
-                    fontSize="3xl"  // Increased font size
+                    height="70px" 
+                    fontSize="3xl" 
                     borderRadius="full"
-                    paddingLeft="50px"  // Add more left padding for the search icon
+                    paddingLeft="50px"  
                     _placeholder={{ color: "gray.400", fontSize: "2xl" }}
                     borderColor="white !important"
                     _hover={{ borderColor: "orange.500 !important"}}
