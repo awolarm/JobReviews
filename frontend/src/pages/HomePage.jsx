@@ -18,10 +18,10 @@ const HomePage = () => {
             {/* Overlay to darken the image and make text more readable */}
             <Box 
                 position="absolute"
-                top="0"
+                top="400"
                 left="0"
                 width="100%"
-                height="100%"
+                height="49%"
                 backgroundColor="rgba(0, 0, 0, 0.5)"
             />
             
