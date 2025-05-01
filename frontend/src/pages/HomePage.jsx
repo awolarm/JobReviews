@@ -1,7 +1,19 @@
-import { Input, Box, Text, VStack, InputGroup, InputLeftElement } from '@chakra-ui/react'
+import { Input, Box, Text, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 import deskImage from '../pages/images/desk.jpg'
+import { useNavigate } from 'react-router-dom'
+import {useState} from 'react'; 
 const HomePage = () => {
+    const [companyName, setCompanyName] = useState('')
+    const navigate = useNavigate()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        //console.log(companyName)
+        // if(companyName.trim()){
+        //     navigate(`/company/${encodeURIComponent(companyName)}`)
+        // }
+    }
     return(
         <Box
             backgroundImage={deskImage}
@@ -52,34 +64,39 @@ const HomePage = () => {
             </Text>
             
             {/* Search input */}
-            <InputGroup 
-                maxW="700px"  
-                zIndex="1"
-                size="lg"     
-            >
-                <InputLeftElement
-                    pointerEvents="none"
-                    children={<SearchIcon color="gray.300" fontSize="20px" />} 
-                    h="full"  
-                />
-                <Input
-                    bg="black !important"
-                    color="white !important"
-                    placeholder="Company Name"
-                    size="lg"
-                    height="70px" 
-                    fontSize="3xl" 
-                    borderRadius="full"
-                    paddingLeft="50px"  
-                    _placeholder={{ color: "gray.400", fontSize: "2xl" }}
-                    borderColor="white !important"
-                    _hover={{ borderColor: "orange.500 !important"}}
-                    _focus={{
-                        borderColor: "orange.500 !important",
-                        boxShadow: "none !important"
-                    }}
-                />
-            </InputGroup>
+            <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '700px', zIndex: '1'}}> 
+                <InputGroup 
+                    maxW="700px"  
+                    zIndex="1"
+                    size="lg"     
+                >
+                    <InputLeftElement
+                        pointerEvents="none"
+                        children={<SearchIcon color="gray.300" fontSize="20px" />} 
+                        h="full"  
+                    />
+                    <Input
+                        bg="black !important"
+                        color="white !important"
+                        placeholder="Company Name"
+                        size="lg"
+                        height="70px" 
+                        fontSize="3xl" 
+                        borderRadius="full"
+                        paddingLeft="50px"  
+                        _placeholder={{ color: "gray.400", fontSize: "2xl" }}
+                        borderColor="white !important"
+                        _hover={{ borderColor: "orange.500 !important"}}
+                        _focus={{
+                            borderColor: "orange.500 !important",
+                            boxShadow: "none !important"
+                        }}
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
+                    />
+                </InputGroup>
+            </form>
+            
             
         </Box>
     )
