@@ -58,6 +58,9 @@ const Navbar = () => {
                         <Link to = "login">
                             <MenuItem>Log In</MenuItem>
                         </Link>
+                        {/* <Link to = "review">
+                            <MenuItem>Reveiws</MenuItem>
+                        </Link> */}
                     </MenuList>
                 </Menu>
             </HStack>

@@ -2,17 +2,18 @@ import { Input, Box, Text, InputGroup, InputLeftElement } from '@chakra-ui/react
 import { SearchIcon } from '@chakra-ui/icons'
 import deskImage from '../pages/images/desk.jpg'
 import { useNavigate } from 'react-router-dom'
-import {useState} from 'react'; 
+import {useState} from 'react';
+
 const HomePage = () => {
     const [companyName, setCompanyName] = useState('')
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        //console.log(companyName)
-        // if(companyName.trim()){
-        //     navigate(`/company/${encodeURIComponent(companyName)}`)
-        // }
+        console.log(companyName)
+        if(companyName.trim()){
+            navigate(`/reviews`)
+        }
     }
     return(
         <Box
