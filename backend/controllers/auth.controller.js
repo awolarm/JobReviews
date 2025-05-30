@@ -94,10 +94,16 @@ export const login = async (req, res) => {
             message: "Internal server error"
         }); 
     }
-}
+}; 
 
 export const logout = async (req, res) => {
     res.json({
         data: "you hit the logout endpoint", 
+    })
+}; 
+
+export const review = async (req, res) => {
+    res.json({
+        data: "you hit review endpoint", 
     })
 }
