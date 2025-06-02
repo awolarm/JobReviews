@@ -10,9 +10,8 @@ const HomePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(companyName)
         if(companyName.trim()){
-            navigate(`/reviews`)
+            navigate(`/reviews/${encodeURIComponent(companyName)}`)
         }
     }
     return(
@@ -49,7 +48,7 @@ const HomePage = () => {
                     color="white"
                     textAlign="center"
                 >
-                    UNFILTERED UNBIASED UNRESTRICTED
+                    UNRESTRICTED COMPANY REVIEWS
                 </Text>
             </Box>
             

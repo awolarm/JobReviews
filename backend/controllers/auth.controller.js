@@ -102,8 +102,44 @@ export const logout = async (req, res) => {
     })
 }; 
 
-export const review = async (req, res) => {
-    res.json({
-        data: "you hit review endpoint", 
-    })
-}
+export const getReviewsByCompany = async (req, res) => {
+    try{
+        const {companyName} = req.params; 
+        // console.log("hello");
+        const companyReviews = await prisma.review.findMany({
+            where: {
+                company: {
+                    equals: companyName,
+                    mode: 'insensitive'
+                }   
+            },
+            // include: {
+            //     reviews: {
+            //         orderBy: {
+            //             createdAt: 'desc' // Most recent reviews first
+            //         }
+            //     }
+            // }
+        }); 
+
+        if(companyReviews.length == 0) {
+            return res.status(404).json({
+                success: false, 
+                message: "Company not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true, 
+            company: companyName, 
+            reviewCount: companyReviews.length,
+            reviews: companyReviews
+        })
+    }catch(error){
+        console.error("Error fetching reviews:" , error ); 
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+};
