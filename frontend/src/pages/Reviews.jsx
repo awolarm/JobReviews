@@ -1,5 +1,7 @@
 import { useParams } from 'react-router-dom';
 import {useEffect, useState} from 'react';
+import { Heading, Icon, Flex } from '@chakra-ui/react'
+import { FaBuilding } from "react-icons/fa";
 
 const Reviews = () => {
     const { companyName } = useParams();
@@ -38,6 +40,14 @@ const Reviews = () => {
 
     return(
         <div>
+            <Flex align="center" gap={3} mb={4}>
+                <Icon as={FaBuilding} boxSize='20' color="orange.500" />
+                <Heading as='h2' size='4xl'>
+                    Company Reviews
+                </Heading>
+            </Flex>
+            <p>Read what employees are saying about working at these companies</p>
+
             <h1>{companyName} Reviews</h1>
             <p>Total Reviews: {reviews.length}</p>
             {reviews.length === 0 ? (
