@@ -5,7 +5,7 @@ import json
 reviews_data = []
 
 with SB(uc=True, test=True, locale="en") as sb:
-    url = "https://www.indeed.com/cmp/Walmart/reviews"
+    url = "https://www.indeed.com/cmp/Google/reviews"
     sb.activate_cdp_mode(url)
     sb.uc_gui_click_captcha()
     sb.sleep(5)
@@ -30,7 +30,7 @@ with SB(uc=True, test=True, locale="en") as sb:
                 'date': spans_date.text.strip() if spans_date else 'N/A',
                 'role': h2_role.text.strip() if h2_role else 'N/A',
                 'location': spans_location.text.strip() if spans_location else 'N/A',
-                'company' : 'Walmart', 
+                'company' : 'Google', 
             }
             reviews_data.append(review)
         
