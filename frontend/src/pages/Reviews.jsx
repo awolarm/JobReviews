@@ -47,7 +47,7 @@ const Reviews = () => {
                     {decodedCompanyName.charAt(0).toUpperCase() + decodedCompanyName.slice(1)} Reviews
                 </Heading>
             </Flex>
-            <Heading as='h2' size="xl">Read what employees are saying about working at these companies</Heading>
+            <Heading as='h2' size="xl">Read what employees are saying about working at {decodedCompanyName.charAt(0).toUpperCase() + decodedCompanyName.slice(1)}.</Heading>
 
             
             <Text fontWeight='bold' fontSize='2xl'>Total Reviews: {reviews.length}</Text>
@@ -57,7 +57,7 @@ const Reviews = () => {
             ) : (
                 <SimpleGrid columns={3} spacing={20} mt={4}>
                     {reviews.map((review) => (
-                        <Box key={review.id} w='100%' h='400px' border='1px solid #ccc' p={4} borderRadius="md">
+                        <Box key={review.id} w='100%' h='400px' border='1px solid #ccc' p={4} borderRadius='md' overflow='hidden'>
                             <HStack>
                                 <Icon as={CiCalendar} boxSize='60px' />
                                 <Text fontSize='3xl'>{review.createdAt}</Text>
