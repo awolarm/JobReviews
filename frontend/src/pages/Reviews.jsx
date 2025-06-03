@@ -50,7 +50,9 @@ const Reviews = () => {
                             <h3>{review.title}</h3>
                             <p>{review.description}</p>
                             <p>Company: {review.company}</p>
-                            <small>Posted: {new Date(review.createdAt).toLocaleDateString()}</small>
+                            <p>Location: {review.location}</p>
+                            <p>Role: {review.role} </p>
+                            
                         </div>
                     ))}
                 </div>
