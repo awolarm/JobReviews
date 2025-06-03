@@ -57,7 +57,7 @@ const Reviews = () => {
             ) : (
                 <SimpleGrid columns={3} spacing={20} mt={4}>
                     {reviews.map((review) => (
-                        <Box key={review.id} w='100%' h='400px' border='1px solid #ccc' p={4} borderRadius='md' overflow='hidden'>
+                        <Box key={review.id} w='100%' h='600px' border='1px solid #ccc' p={4} borderRadius='md'>
                             <HStack>
                                 <Icon as={CiCalendar} boxSize='60px' />
                                 <Text fontSize='3xl'>{review.createdAt}</Text>
