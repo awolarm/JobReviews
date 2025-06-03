@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import { Heading, Icon, Flex, Box, SimpleGrid, HStack, Text } from '@chakra-ui/react'
 import { FaBuilding } from "react-icons/fa";
 import { CiCalendar } from "react-icons/ci";
-
+import { FaLocationDot } from "react-icons/fa6";
 const Reviews = () => {
     const { companyName } = useParams();
     const decodedCompanyName = decodeURIComponent(companyName);
@@ -63,9 +63,12 @@ const Reviews = () => {
                                 <Text fontSize='3xl'>{review.createdAt}</Text>
                             </HStack>
                             <Text fontWeight = 'bold' fontSize='4xl'>{review.title}</Text>
+                            <HStack>
+                                <Icon as={FaLocationDot} boxSize='25px' />
+                                <Text fontWeight='bold' fontSize='2xl'>{review.location}</Text>
+                                <Text fontWeight='bold' fontSize='2xl'>{review.role}</Text>
+                            </HStack>
                             <Text fontSize='3xl'>{review.description}</Text>
-                            <p>Location: {review.location}</p>
-                            <p>Role: {review.role}</p>
                         </Box>
                     ))}
                 </SimpleGrid>
