@@ -46,7 +46,7 @@ const Reviews = () => {
                     Company Reviews
                 </Heading>
             </Flex>
-            <p>Read what employees are saying about working at these companies</p>
+            <Heading as='h2' size="lg">Read what employees are saying about working at these companies</Heading>
 
             <h1>{companyName} Reviews</h1>
             <p>Total Reviews: {reviews.length}</p>
