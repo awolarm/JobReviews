@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import { Heading, Icon, Flex } from '@chakra-ui/react'
+import { Heading, Icon, Flex, Box, SimpleGrid, HStack, Text } from '@chakra-ui/react'
 import { FaBuilding } from "react-icons/fa";
+import { CiCalendar } from "react-icons/ci";
 
 const Reviews = () => {
     const { companyName } = useParams();
@@ -39,37 +40,38 @@ const Reviews = () => {
     if (error) return <div>Error: {error}</div>; 
 
     return(
-        <div>
+        <Box px={12} py={5}>
             <Flex align="center" gap={3} mb={4}>
                 <Icon as={FaBuilding} boxSize='20' color="orange.500" />
                 <Heading as='h2' size='4xl'>
-                    Company Reviews
+                    {decodedCompanyName.charAt(0).toUpperCase() + decodedCompanyName.slice(1)} Reviews
                 </Heading>
             </Flex>
-            <Heading as='h2' size="lg">Read what employees are saying about working at these companies</Heading>
+            <Heading as='h2' size="xl">Read what employees are saying about working at these companies</Heading>
 
-            <h1>{companyName} Reviews</h1>
+            
             <p>Total Reviews: {reviews.length}</p>
+
             {reviews.length === 0 ? (
                 <p>No reviews found for this company.</p>
             ) : (
-                <div>
+                <SimpleGrid columns={3} spacing={20} mt={4}>
                     {reviews.map((review) => (
-
-                        <div key={review.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '15px' }}>
-                            <h3>{review.title}</h3>
-                            <p>{review.description}</p>
-                            <p>Company: {review.company}</p>
+                        <Box key={review.id} w='100%' h='400px' border='1px solid #ccc' p={4} borderRadius="md">
+                            <HStack>
+                                <Icon as={CiCalendar} boxSize='60px' />
+                                <Text fontSize='3xl'>{review.createdAt}</Text>
+                            </HStack>
+                            <Text fontWeight = 'bold' fontSize='4xl'>{review.title}</Text>
+                            <Text fontSize='3xl'>{review.description}</Text>
                             <p>Location: {review.location}</p>
-                            <p>Role: {review.role} </p>
-                            
-                        </div>
+                            <p>Role: {review.role}</p>
+                        </Box>
                     ))}
-                </div>
+                </SimpleGrid>
             )}
-        </div>
+        </Box>
     );
 }
 
-
-export default Reviews; 
+export default Reviews;
