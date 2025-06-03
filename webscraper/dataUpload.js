@@ -26,6 +26,9 @@ async function uploadReviews() {
         title: review.title,
         description: review.description,
         company: review.company,
+        createdAt: review.date,
+        location: review.location,
+        role: review.role
         // rating, comment, and userId are nullable, so we don't need to include them
       })),
       skipDuplicates: true, // Avoid inserting duplicates if you run this multiple times
