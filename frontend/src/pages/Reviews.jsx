@@ -50,7 +50,7 @@ const Reviews = () => {
             <Heading as='h2' size="xl">Read what employees are saying about working at these companies</Heading>
 
             
-            <p>Total Reviews: {reviews.length}</p>
+            <Text fontWeight='bold' fontSize='2xl'>Total Reviews: {reviews.length}</Text>
 
             {reviews.length === 0 ? (
                 <p>No reviews found for this company.</p>
