@@ -105,7 +105,6 @@ export const logout = async (req, res) => {
 export const getReviewsByCompany = async (req, res) => {
     try{
         const {companyName} = req.params; 
-        // console.log("hello");
         const companyReviews = await prisma.review.findMany({
             where: {
                 company: {
