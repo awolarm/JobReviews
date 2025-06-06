@@ -8,6 +8,11 @@ const API_CONFIG = {
     SIGNUP_ENDPOINT: '/api/auth/signup'
 }
 
+const emailValidation = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email.trim());
+}
+
 const SignupPage = () => {
   const formBg = useColorModeValue("white", "gray.700");
   const inputBg = useColorModeValue("gray.50", "gray.600");
@@ -52,7 +57,22 @@ const SignupPage = () => {
         setIsLoading(false); 
         return; 
     }
+
+    if(formData.password.length < 8){
+        setToastMessage("Password needs to be 8 characters long");
+        setToastStatus("error");
+        setShowToast(true);
+        setIsLoading(false); 
+        return; 
+    }
   
+    if(!emailValidation(formData.email)){ 
+      setToastMessage("Please enter a valid email");
+      setToastStatus("error");
+      setShowToast(true);
+      setIsLoading(false); 
+      return; 
+    } 
 
     try {
         const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
@@ -138,7 +158,7 @@ const SignupPage = () => {
                     <FormLabel color={textColor}>Email</FormLabel>
                     <Input  
                       name="email"
-                      type="email"
+                      type="text"
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Enter your email"
