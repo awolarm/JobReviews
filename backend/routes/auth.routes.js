@@ -15,6 +15,9 @@ router.post("/login", login);
 
 router.get("/reviews/:companyName", getReviewsByCompany);
 
+
+
+
 router.post("/logout", authenticateToken, logout);
 
 router.post("/review", authenticateToken, createReview);

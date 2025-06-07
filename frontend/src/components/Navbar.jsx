@@ -9,6 +9,12 @@ import { FiUser } from "react-icons/fi";
 const Navbar = () => {
     const {colorMode, toggleColorMode} = useColorMode(); 
 
+    const handleClick = () => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+    }
+
+
     return (
     <Container maxW="1140" px={4}>
         <Flex
@@ -57,6 +63,10 @@ const Navbar = () => {
                         <MenuDivider/>
                         <Link to = "login">
                             <MenuItem>Log In</MenuItem>
+                        </Link>
+                        <MenuDivider/> 
+                        <Link onClick = {handleClick} to = "/login">
+                            <MenuItem>Log Out</MenuItem>
                         </Link>
                         {/* <Link to = "review">
                             <MenuItem>Reveiws</MenuItem>

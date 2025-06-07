@@ -16,7 +16,16 @@ const HomePage = () => {
     }
 
     const handleClick = () => {
-        navigate('/review'); 
+        const token = localStorage.getItem('authToken');
+        
+        if (!token) {
+            // Store where they wanted to go and redirect to login
+            localStorage.setItem('intendedRoute', '/review');
+            navigate('/login');
+        } else {
+            // Use replace: true to avoid navigation stack issues
+            navigate('/review', { replace: true });
+        }
     }
 
     return(

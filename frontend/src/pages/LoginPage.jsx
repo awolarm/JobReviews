@@ -74,16 +74,11 @@ const LoginPage = () => {
                 setShowToast(true);
                 setTimeout(() => {
                 navigate('/');
-                }, 4000);
+                }, 3500);
             }else{
                 const errorData = await response.json(); 
                 throw new Error(errorData.message); 
             }
-
-            setTimeout(() => {
-                navigate('/');
-            }, 500);
-
         }catch(error){
             setToastMessage(error.message); 
             setToastStatus("error"); 

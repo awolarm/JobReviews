@@ -10,6 +10,7 @@ const Review = () => {
         
         if (!token) {
             navigate('/login');
+            console.log('No token found, redirecting to login');
             return;
         }
         
