@@ -65,15 +65,20 @@ const LoginPage = () => {
                 })
             }); 
 
-            if(!response.ok){
+            if(response.ok){
+                const responseData = await response.json();
+                localStorage.setItem('authToken', responseData.token); 
+                localStorage.setItem('user', JSON.stringify(responseData.user));    
+                setToastMessage(responseData.message);
+                setToastStatus("success");
+                setShowToast(true);
+                setTimeout(() => {
+                navigate('/');
+                }, 4000);
+            }else{
                 const errorData = await response.json(); 
                 throw new Error(errorData.message); 
             }
-
-            const responseData = await response.json(); 
-            setToastMessage(responseData.message);
-            setToastStatus("success");
-            setShowToast(true);
 
             setTimeout(() => {
                 navigate('/');

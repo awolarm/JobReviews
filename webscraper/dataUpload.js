@@ -29,9 +29,8 @@ async function uploadReviews() {
         createdAt: review.date,
         location: review.location,
         role: review.role
-        // rating, comment, and userId are nullable, so we don't need to include them
       })),
-      skipDuplicates: true, // Avoid inserting duplicates if you run this multiple times
+      skipDuplicates: true, 
     });
     
     console.log(`Successfully uploaded ${result.count} reviews`);

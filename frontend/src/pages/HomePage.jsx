@@ -1,4 +1,4 @@
-import { Input, Box, Text, InputGroup, InputLeftElement } from '@chakra-ui/react'
+import { Input, Box, Text, InputGroup, InputLeftElement, Link } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 import deskImage from '../pages/images/desk.jpg'
 import { useNavigate } from 'react-router-dom'
@@ -14,6 +14,11 @@ const HomePage = () => {
             navigate(`/reviews/${encodeURIComponent(companyName)}`)
         }
     }
+
+    const handleClick = () => {
+        navigate('/review'); 
+    }
+
     return(
         <Box
             backgroundImage={deskImage}
@@ -96,8 +101,16 @@ const HomePage = () => {
                     />
                 </InputGroup>
             </form>
-            
-            
+            <Text
+                zIndex="1"
+                fontSize="2xl"
+                color="white"
+                mt="6"
+                textAlign="center"
+                maxWidth="600px"
+            >
+                Create your own review <Link onClick = {handleClick} color = 'blue.400'>here</Link>
+            </Text>
         </Box>
     )
 }
