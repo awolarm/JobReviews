@@ -9,6 +9,7 @@ const Review = () => {
         const token = localStorage.getItem('authToken');
         
         if (!token) {
+            localStorage.setItem('intendedRoute', '/review');
             navigate('/login');
             console.log('No token found, redirecting to login');
             return;

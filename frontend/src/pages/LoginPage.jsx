@@ -73,8 +73,10 @@ const LoginPage = () => {
                 setToastStatus("success");
                 setShowToast(true);
                 setTimeout(() => {
-                navigate('/');
-                }, 3500);
+                    var intendedRoute = localStorage.getItem('intendedRoute');
+                    navigate(intendedRoute || '/');
+                    localStorage.removeItem('intendedRoute');
+                }, 250);
             }else{
                 const errorData = await response.json(); 
                 throw new Error(errorData.message); 
