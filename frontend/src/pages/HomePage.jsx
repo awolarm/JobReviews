@@ -19,7 +19,10 @@ const HomePage = () => {
         const token = localStorage.getItem('authToken');
         
         if (!token) {
+            localStorage.setItem('intendedRoute', '/review');
             navigate('/login');
+            console.log('No token found, redirecting to login');
+            return;
         } else {
             // Use replace: true to avoid navigation stack issues
             navigate('/review', { replace: true });

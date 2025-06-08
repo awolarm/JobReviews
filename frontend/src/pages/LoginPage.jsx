@@ -69,6 +69,7 @@ const LoginPage = () => {
                 const responseData = await response.json();
                 localStorage.setItem('authToken', responseData.token); 
                 localStorage.setItem('user', JSON.stringify(responseData.user));    
+                window.dispatchEvent(new Event('storage'));
                 setToastMessage(responseData.message);
                 setToastStatus("success");
                 setShowToast(true);

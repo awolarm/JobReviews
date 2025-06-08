@@ -8,12 +8,12 @@ const Review = () => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         
-        if (!token) {
-            localStorage.setItem('intendedRoute', '/review');
-            navigate('/login');
-            console.log('No token found, redirecting to login');
-            return;
-        }
+        // if (!token) {
+        //     localStorage.setItem('intendedRoute', '/review');
+        //     navigate('/login');
+        //     console.log('No token found, redirecting to login');
+        //     return;
+        // } - idk if this is needed
         
         setIsLoading(false);
     }, [navigate]); // Add navigate as dependency

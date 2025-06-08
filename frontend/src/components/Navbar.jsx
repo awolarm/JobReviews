@@ -5,13 +5,32 @@ import { PlusSquareIcon, ChevronDownIcon  } from "@chakra-ui/icons";
 import { IoMoon } from "react-icons/io5"; 
 import { LuSun } from "react-icons/lu"; 
 import { FiUser } from "react-icons/fi";
+import {useState, useEffect} from 'react';
 
 const Navbar = () => {
     const {colorMode, toggleColorMode} = useColorMode(); 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const checkAuthStatus = () => {
+            const token = localStorage.getItem('authToken');
+            setIsLoggedIn(!!token); 
+        }
+
+        checkAuthStatus(); 
+
+        window.addEventListener('storage', checkAuthStatus); 
+
+        return () => {
+            window.removeEventListener('storage', checkAuthStatus);
+        };
+    }, []);
+    
 
     const handleClick = () => {
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
+        setIsLoggedIn(false); 
     }
 
 
@@ -57,20 +76,21 @@ const Navbar = () => {
                         Account
                     </MenuButton>
                     <MenuList>
-                        <Link to = "signup">
-                            <MenuItem>Sign Up</MenuItem>
-                        </Link>
-                        <MenuDivider/>
-                        <Link to = "login">
-                            <MenuItem>Log In</MenuItem>
-                        </Link>
-                        <MenuDivider/> 
-                        <Link onClick = {handleClick} to = "/login">
-                            <MenuItem>Log Out</MenuItem>
-                        </Link>
-                        {/* <Link to = "review">
-                            <MenuItem>Reveiws</MenuItem>
-                        </Link> */}
+                        {!isLoggedIn ? (
+                            <>
+                                <Link to="signup">
+                                    <MenuItem>Sign Up</MenuItem>
+                                </Link>
+                                <MenuDivider/>
+                                <Link to="login">
+                                    <MenuItem>Log In</MenuItem>
+                                </Link>
+                            </>
+                        ) : (
+                            <Link onClick={handleClick} to="/login">
+                                <MenuItem>Log Out</MenuItem>
+                            </Link>
+                        )}
                     </MenuList>
                 </Menu>
             </HStack>
