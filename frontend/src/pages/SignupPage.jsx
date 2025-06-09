@@ -52,13 +52,21 @@ const SignupPage = () => {
     e.preventDefault(); 
     setIsLoading(true); 
 
-    if(formData.password !== formData.confirmPassword) {
-        setToastMessage("Passwords do not match");
-        setToastStatus("error");
-        setShowToast(true);
-        setIsLoading(false); 
-        return; 
-    }
+    if(!formData.username || !formData.email || !formData.password || !formData.confirmPassword){
+            setToastMessage("All fields required");
+            setToastStatus("error");
+            setShowToast(true);
+            setIsLoading(false); 
+            return; 
+        }
+
+    if(!emailValidation(formData.email)){ 
+      setToastMessage("Please enter a valid email");
+      setToastStatus("error");
+      setShowToast(true);
+      setIsLoading(false); 
+      return; 
+    }     
 
     if(formData.password.length < 8){
         setToastMessage("Password needs to be 8 characters long");
@@ -68,13 +76,13 @@ const SignupPage = () => {
         return; 
     }
   
-    if(!emailValidation(formData.email)){ 
-      setToastMessage("Please enter a valid email");
-      setToastStatus("error");
-      setShowToast(true);
-      setIsLoading(false); 
-      return; 
-    } 
+    if(formData.password !== formData.confirmPassword) {
+        setToastMessage("Passwords do not match");
+        setToastStatus("error");
+        setShowToast(true);
+        setIsLoading(false); 
+        return; 
+    }
 
     try {
         const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {

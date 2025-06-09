@@ -31,7 +31,14 @@ const Review = () => {
         description: '', 
     });
     
-
+    useEffect(() => {
+        if (showToast) {
+            const timer = setTimeout(() => {
+                setShowToast(false);
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [showToast]);
 
     
     const handleSubmit = async(e) => {
@@ -47,6 +54,14 @@ const Review = () => {
                 setShowToast(true);
                 navigate('/login'); 
                 return;
+            }
+
+            if(!formData.company || !formData.location || !formData.role || !formData.title || !formData.description){
+                setToastMessage("All fields required");
+                setToastStatus("error");
+                setShowToast(true);
+                setIsLoading(false); 
+                return; 
             }
 
 
