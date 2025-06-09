@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Container, Input, VStack, Text} from '@chakra-ui/react';
+import { Box, Button, Container, Input, VStack, Text, Textarea} from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control';
 
@@ -12,7 +12,7 @@ const API_CONFIG = {
 const Review = () => {
     const navigate = useNavigate(); // Move this to the top level
     
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastStatus, setToastStatus] = useState('');
@@ -76,10 +76,7 @@ const Review = () => {
                 setToastStatus("Success");
                 setShowToast(true);
                 setTimeout(() => {
-                    //var intendedRoute = localStorage.getItem('intendedRoute');
-                    //navigate(intendedRoute || '/');
                     navigate(`/reviews/${formData.company}`);
-                    //localStorage.removeItem('intendedRoute');
                 }, 250);
             }else{
                 const errorData = await response.json(); 
@@ -103,20 +100,10 @@ const Review = () => {
         })
     }
 
-    useEffect(() => {
-        const token = localStorage.getItem('authToken');
-        
-        // if (!token) {
-        //     localStorage.setItem('intendedRoute', '/review');
-        //     navigate('/login');
-        //     console.log('No token found, redirecting to login');
-        //     return;
-        // } - idk if this is needed
-        
-        setIsLoading(false);
-    }, [navigate]); // Add navigate as dependency
+    // useEffect(() => {        
+    //     setIsLoading(false);
+    // });
     
-    // Show loading while checking authentication
     if (isLoading) {
         return (
             <div>
@@ -170,8 +157,11 @@ const Review = () => {
                                     bg={inputBg}
                                     color={textColor}
                                     borderColor={bColor}
-                                    _hover={{ borderColor: hoverColor }}
-                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                    _hover={{ borderColor: "orange.500 !important"}}
+                                    _focus={{
+                                        borderColor: "orange.500 !important",
+                                        boxShadow: "none !important"
+                                     }}
                                 />
                                 <FormLabel color={textColor}>Location</FormLabel>
                                 <Input
@@ -184,8 +174,11 @@ const Review = () => {
                                     bg={inputBg}
                                     color={textColor}
                                     borderColor={bColor}
-                                    _hover={{ borderColor: hoverColor }}
-                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                    _hover={{ borderColor: "orange.500 !important"}}
+                                    _focus={{
+                                        borderColor: "orange.500 !important",
+                                        boxShadow: "none !important"
+                                     }}
                                 />
                                 <FormLabel color={textColor}>Role</FormLabel>
                                 <Input
@@ -199,8 +192,11 @@ const Review = () => {
                                     bg={inputBg}
                                     color={textColor}
                                     borderColor={bColor}
-                                    _hover={{ borderColor: hoverColor }}
-                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                    _hover={{ borderColor: "orange.500 !important"}}
+                                    _focus={{
+                                        borderColor: "orange.500 !important",
+                                        boxShadow: "none !important"
+                                     }}
                                 />
                                 <FormLabel color={textColor}>Title</FormLabel>
                                 <Input
@@ -214,23 +210,29 @@ const Review = () => {
                                     bg={inputBg}
                                     color={textColor}
                                     borderColor={bColor}
-                                    _hover={{ borderColor: hoverColor }}
-                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                    _hover={{ borderColor: "orange.500 !important"}}
+                                    _focus={{
+                                        borderColor: "orange.500 !important",
+                                        boxShadow: "none !important"
+                                     }}
                                 />
                                 <FormLabel color={textColor}>Description</FormLabel>
-                                <Input
+                                <Textarea
                                     name="description"
-                                    type="text"
                                     value={formData.description}
                                     onChange={handleFormChange}
                                     placeholder="Enter description"
                                     _placeholder={{color: "gray.500"}}
-                                    
+                                    height={'100px'}
                                     bg={inputBg}
                                     color={textColor}
                                     borderColor={bColor}
-                                    _hover={{ borderColor: hoverColor }}
-                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                    _hover={{ borderColor: "orange.500 !important"}}
+                                    _focus={{
+                                        borderColor: "orange.500 !important",
+                                        boxShadow: "none !important"
+                                     }}
+                                    resize="vertical"
                                 />
                                 <Text fontSize='50px' color={textColor}></Text>
                             </FormControl>

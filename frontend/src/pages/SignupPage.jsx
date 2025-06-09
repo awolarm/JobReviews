@@ -149,8 +149,11 @@ const SignupPage = () => {
                       bg={inputBg}
                       color={textColor}
                       borderColor={useColorModeValue("gray.300", "gray.500")}
-                      _hover={{ borderColor: useColorModeValue("gray.400", "gray.400") }}
-                      _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                      _hover={{ borderColor: "orange.500 !important"}}
+                      _focus={{
+                        borderColor: "orange.500 !important",
+                        boxShadow: "none !important"
+                      }}
                     />
                 </FormControl>
 
@@ -167,8 +170,11 @@ const SignupPage = () => {
                       bg={inputBg}
                       color={textColor}
                       borderColor={useColorModeValue("gray.300", "gray.500")}
-                      _hover={{ borderColor: useColorModeValue("gray.400", "gray.400") }}
-                      _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                      _hover={{ borderColor: "orange.500 !important"}}
+                      _focus={{
+                        borderColor: "orange.500 !important",
+                        boxShadow: "none !important"
+                      }}
                     />
                 </FormControl>
 
@@ -185,8 +191,11 @@ const SignupPage = () => {
                       bg={inputBg}
                       color={textColor}
                       borderColor={useColorModeValue("gray.300", "gray.500")}
-                      _hover={{ borderColor: useColorModeValue("gray.400", "gray.400") }}
-                      _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                      _hover={{ borderColor: "orange.500 !important"}}
+                      _focus={{
+                        borderColor: "orange.500 !important",
+                        boxShadow: "none !important"
+                      }}
                     />
                 </FormControl>
 
@@ -203,8 +212,11 @@ const SignupPage = () => {
                       bg={inputBg}
                       color={textColor}
                       borderColor={useColorModeValue("gray.300", "gray.500")}
-                      _hover={{ borderColor: useColorModeValue("gray.400", "gray.400") }}
-                      _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                      _hover={{ borderColor: "orange.500 !important"}}
+                      _focus={{
+                        borderColor: "orange.500 !important",
+                        boxShadow: "none !important"
+                      }}
                     />
                 </FormControl>
 
