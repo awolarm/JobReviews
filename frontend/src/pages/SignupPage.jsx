@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Box, Button, Container, Input, VStack, Text } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control'; 
+import { useNavigate } from 'react-router-dom';
 
 const API_CONFIG = {
     BASE_URL: 'http://localhost:5000', 
@@ -14,6 +15,7 @@ const emailValidation = (email) => {
 }
 
 const SignupPage = () => {
+  const navigate = useNavigate(); 
   const formBg = useColorModeValue("white", "gray.700");
   const inputBg = useColorModeValue("gray.50", "gray.600");
   const textColor = useColorModeValue("gray.800", "white");
@@ -101,6 +103,9 @@ const SignupPage = () => {
         setShowToast(true);
     } finally {
         setIsLoading(false); 
+        setTimeout(() => {
+          navigate('/login');
+        }, 250);
     }
   };
 
