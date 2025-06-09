@@ -1,10 +1,39 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Box, Button, Container, Input, VStack, Text} from '@chakra-ui/react';
+import { useColorModeValue } from '@chakra-ui/color-mode';
+import { FormControl, FormLabel} from '@chakra-ui/form-control';
+
 
 const Review = () => {
     const navigate = useNavigate(); // Move this to the top level
     const [isLoading, setIsLoading] = useState(true);
+    const formBg = useColorModeValue("white", "gray.700");
+    const inputBg = useColorModeValue("gray.50", "gray.600"); 
+    const textColor = useColorModeValue("gray.800", "white"); 
+    const bColor = useColorModeValue("gray.300", "gray.500");
+    const hoverColor = useColorModeValue("gray.400", "gray.400"); 
+    const buttonColor = useColorModeValue("blue", "teal"); 
+    const [formData, setFormData] = useState ({
+        company: '', 
+        role: '',
+        location: '', 
+        title: '',
+        description: '', 
+    });
     
+    
+    const handleSubmit = () => {
+
+    }
+
+    const handleFormChange = () => {
+        setFormData({
+            ...formData, 
+            [e.target.name] : e.target.value
+        })
+    }
+
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         
@@ -28,10 +57,116 @@ const Review = () => {
     }
     
     return (
-        <div>
-            <h1>Review Page</h1>
-            <p>This is where users can write reviews about companies.</p>
-        </div>
+        <Container maxW="container.sm" py={10}>
+            <VStack spacing = {8}>
+                <Box
+                    w="full"
+                    p={8}
+                    rounded="lg"
+                    shadow="lg"
+                    borderWidth="1px"
+                     bg={formBg}
+                >
+                    <form onSubmit = {handleSubmit}>
+                        <VStack spacing={6}>
+                            <Text fontSize='50px' color={textColor}>
+                                Create a review
+                            </Text>
+                            <FormControl>
+                                <FormLabel color={textColor}>Company</FormLabel>
+                                <Input
+                                    name="company"
+                                    type="text"
+                                    value={formData.company}
+                                    onChange={handleFormChange}
+                                    placeholder="Enter company name"
+                                    _placeholder={{color: "gray.500"}}
+                                    
+                                    bg={inputBg}
+                                    color={textColor}
+                                    borderColor={bColor}
+                                    _hover={{ borderColor: hoverColor }}
+                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                />
+                                <FormLabel color={textColor}>Location</FormLabel>
+                                <Input
+                                    name="location"
+                                    type="text"
+                                    value={formData.location}
+                                    onChange={handleFormChange}
+                                    placeholder="Enter location"
+                                    _placeholder={{color: "gray.500"}}
+                                    bg={inputBg}
+                                    color={textColor}
+                                    borderColor={bColor}
+                                    _hover={{ borderColor: hoverColor }}
+                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                />
+                                <FormLabel color={textColor}>Role</FormLabel>
+                                <Input
+                                    name="role"
+                                    type="text"
+                                    value={formData.role}
+                                    onChange={handleFormChange}
+                                    placeholder="Enter role"
+                                    _placeholder={{color: "gray.500"}}
+                                    
+                                    bg={inputBg}
+                                    color={textColor}
+                                    borderColor={bColor}
+                                    _hover={{ borderColor: hoverColor }}
+                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                />
+                                <FormLabel color={textColor}>Title</FormLabel>
+                                <Input
+                                    name="title"
+                                    type="text"
+                                    value={formData.title}
+                                    onChange={handleFormChange}
+                                    placeholder="Enter title"
+                                    _placeholder={{color: "gray.500"}}
+                                    
+                                    bg={inputBg}
+                                    color={textColor}
+                                    borderColor={bColor}
+                                    _hover={{ borderColor: hoverColor }}
+                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                />
+                                <FormLabel color={textColor}>Description</FormLabel>
+                                <Input
+                                    name="description"
+                                    type="text"
+                                    value={formData.title}
+                                    onChange={handleFormChange}
+                                    placeholder="Enter description"
+                                    _placeholder={{color: "gray.500"}}
+                                    
+                                    bg={inputBg}
+                                    color={textColor}
+                                    borderColor={bColor}
+                                    _hover={{ borderColor: hoverColor }}
+                                    _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px blue.500" }}
+                                />
+                                <Text fontSize='50px' color={textColor}></Text>
+                            </FormControl>
+                            <Button 
+                                type="submit"
+                                //isLoading={isLoading}
+                                colorScheme={ buttonColor}
+                                size="lg"
+                                width="full"
+                                mt={4}
+                            > 
+                                Submit Review
+                            </Button> 
+                        </VStack>
+                    </form>
+                
+                
+                
+                </Box>
+            </VStack>
+        </Container>
     );
 }
 
