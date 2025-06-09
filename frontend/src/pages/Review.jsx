@@ -4,10 +4,19 @@ import { Box, Button, Container, Input, VStack, Text} from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control';
 
+const API_CONFIG = {
+    BASE_URL: 'http://localhost:5000', 
+    SIGNUP_ENDPOINT: '/api/auth/review'
+}
 
 const Review = () => {
     const navigate = useNavigate(); // Move this to the top level
+    
     const [isLoading, setIsLoading] = useState(true);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastStatus, setToastStatus] = useState('');
+
     const formBg = useColorModeValue("white", "gray.700");
     const inputBg = useColorModeValue("gray.50", "gray.600"); 
     const textColor = useColorModeValue("gray.800", "white"); 
@@ -22,12 +31,72 @@ const Review = () => {
         description: '', 
     });
     
+
+
     
-    const handleSubmit = () => {
+    const handleSubmit = async(e) => {
+        e.preventDefault();   
+        
+        try {
+
+            const token = localStorage.getItem('authToken');
+        
+            if (!token) {
+                setToastMessage('Please log in to create a review');
+                setToastStatus('error');
+                setShowToast(true);
+                navigate('/login'); 
+                return;
+            }
+
+
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type' : 'application/json', 
+                    'Authorization': `Bearer ${token}`
+                }, 
+                body : JSON.stringify({
+                    company: formData.company, 
+                    location: formData.location, 
+                    role: formData.role, 
+                    title: formData.title, 
+                    description: formData.description,
+                    createdAt: new Date().toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    }),
+                })
+            }); 
+
+            if(response.ok){
+                const responseData = await response.json();
+                setToastMessage(responseData.message);
+                setToastStatus("Success");
+                setShowToast(true);
+                setTimeout(() => {
+                    //var intendedRoute = localStorage.getItem('intendedRoute');
+                    //navigate(intendedRoute || '/');
+                    navigate(`/reviews/${formData.company}`);
+                    //localStorage.removeItem('intendedRoute');
+                }, 250);
+            }else{
+                const errorData = await response.json(); 
+                throw new Error(errorData.message); 
+            }
+        }catch(error){
+            setToastMessage(error.message); 
+            setToastStatus("error"); 
+            setShowToast(true);
+
+        }finally{
+            setIsLoading(false); 
+        }
 
     }
 
-    const handleFormChange = () => {
+    const handleFormChange = (e) => {
         setFormData({
             ...formData, 
             [e.target.name] : e.target.value
@@ -58,6 +127,22 @@ const Review = () => {
     
     return (
         <Container maxW="container.sm" py={10}>
+            {showToast &&(
+                <Box
+                    position="fixed"
+                    top="4"
+                    right="4"
+                    p="4"
+                    bg={toastStatus === 'error' ? 'red.500' : 'green.500'}
+                    color="white"
+                    borderRadius="md"
+                    zIndex="toast"
+                
+                >
+                    {toastMessage}
+                </Box>
+            )}
+
             <VStack spacing = {8}>
                 <Box
                     w="full"
@@ -136,7 +221,7 @@ const Review = () => {
                                 <Input
                                     name="description"
                                     type="text"
-                                    value={formData.title}
+                                    value={formData.description}
                                     onChange={handleFormChange}
                                     placeholder="Enter description"
                                     _placeholder={{color: "gray.500"}}
@@ -151,7 +236,7 @@ const Review = () => {
                             </FormControl>
                             <Button 
                                 type="submit"
-                                //isLoading={isLoading}
+                                isLoading={isLoading}
                                 colorScheme={ buttonColor}
                                 size="lg"
                                 width="full"

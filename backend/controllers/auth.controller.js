@@ -157,7 +157,7 @@ export const getReviewsByCompany = async (req, res) => {
 
 export const createReview = async (req, res) => {
     try {
-        const {title, description, company, location, role} = req.body;
+        const {title, description, company, location, role, createdAt} = req.body;
 
         const userId = req.user?.userId; 
 
@@ -167,7 +167,7 @@ export const createReview = async (req, res) => {
             });
         }
 
-        if (!title || !description || !company || !location || !role) {
+        if (!title || !description || !company || !location || !role || !createdAt) {
             return res.status(400).json({
                 message: "All fields are required"
             });
@@ -181,6 +181,7 @@ export const createReview = async (req, res) => {
                 location: location,
                 role: role,
                 userId: userId,
+                createdAt: createdAt,
             },
             include: {
                 user: {
