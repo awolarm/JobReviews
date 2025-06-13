@@ -86,7 +86,7 @@ export const login = async (req, res) => {
         }
         const token = jwt.sign(
             { userId: user.id, email: user.email },
-            process.env.JWT_SECRET || 'puppa', // Use environment variable
+            process.env.JWT_SECRET || 'puppa',
             { expiresIn: '24h' }
         );
    
@@ -124,28 +124,28 @@ export const getReviewsByCompany = async (req, res) => {
                     mode: 'insensitive'
                 }   
             },
-            // include: {
-            //     reviews: {
-            //         orderBy: {
-            //             createdAt: 'desc' // Most recent reviews first
-            //         }
-            //     }
-            // }
         }); 
 
-        if(companyReviews.length == 0) {
+        if(companyReviews.length === 0) {
             return res.status(404).json({
                 success: false, 
                 message: "Company not found"
             });
         }
 
+        const sortedReviews = companyReviews.sort((a, b) => {
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+            return dateB - dateA; // Most recent first (descending order)
+        });
+
+
         res.status(200).json({
             success: true, 
             company: companyName, 
             reviewCount: companyReviews.length,
-            reviews: companyReviews
-        })
+            reviews: sortedReviews
+        }); 
     }catch(error){
         console.error("Error fetching reviews:" , error ); 
         res.status(500).json({

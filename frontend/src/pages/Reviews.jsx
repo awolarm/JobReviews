@@ -17,8 +17,6 @@ const Reviews = () => {
             try{
                 const response = await fetch(`/api/auth/reviews/${encodeURIComponent(decodedCompanyName)}`);
                 const data = await response.json(); 
-                
-                console.log("Response data: ", data);
 
                 if(data.success) {
                     setReviews(data.reviews);

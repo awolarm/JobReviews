@@ -58,11 +58,6 @@ const Navbar = () => {
             </Text>
 
             <HStack spacing={2} alignItems={"center"}>
-                {/* <Link to={"signup"}>
-                <Button>
-                    <PlusSquareIcon fontSize={20}/> 
-                </Button>
-                </Link> */}
                 <Button onClick={toggleColorMode}>
                     {colorMode === "light" ? <IoMoon/> : <LuSun size="20"/>}
                 </Button>

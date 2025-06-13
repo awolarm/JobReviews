@@ -10,7 +10,7 @@ const API_CONFIG = {
 }
 
 const Review = () => {
-    const navigate = useNavigate(); // Move this to the top level
+    const navigate = useNavigate(); 
     
     const [isLoading, setIsLoading] = useState(false);
     const [showToast, setShowToast] = useState(false);
@@ -114,10 +114,6 @@ const Review = () => {
             [e.target.name] : e.target.value
         })
     }
-
-    // useEffect(() => {        
-    //     setIsLoading(false);
-    // });
     
     if (isLoading) {
         return (

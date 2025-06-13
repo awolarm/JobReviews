@@ -7,10 +7,6 @@ dotenv.config();
 
 const app = express(); 
 
-// app.get("/", (req, res) => {
-//     res.send("Server is ready");
-// })
-
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
