@@ -1,7 +1,7 @@
 import { Button, Container, Flex, HStack, Text, useColorMode, Menu, MenuButton, MenuList, MenuItem, MenuDivider} from '@chakra-ui/react'; 
 import {Link} from "react-router-dom"; 
 
-import { PlusSquareIcon, ChevronDownIcon  } from "@chakra-ui/icons"; 
+import { ChevronDownIcon  } from "@chakra-ui/icons"; 
 import { IoMoon } from "react-icons/io5"; 
 import { LuSun } from "react-icons/lu"; 
 import { FiUser } from "react-icons/fi";

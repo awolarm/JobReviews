@@ -86,7 +86,7 @@ export const login = async (req, res) => {
         }
         const token = jwt.sign(
             { userId: user.id, email: user.email },
-            process.env.JWT_SECRET || 'puppa',
+            process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
    
@@ -136,7 +136,7 @@ export const getReviewsByCompany = async (req, res) => {
         const sortedReviews = companyReviews.sort((a, b) => {
             const dateA = new Date(a.createdAt);
             const dateB = new Date(b.createdAt);
-            return dateB - dateA; // Most recent first (descending order)
+            return dateB - dateA; 
         });
 
 
@@ -214,7 +214,7 @@ export const authenticateToken = (req, res, next) => {
         return res.status(401).json({ message: 'Access token required' });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET || 'puppa', (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
             return res.status(403).json({ message: 'Invalid or expired token' });
         }
