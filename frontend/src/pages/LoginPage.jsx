@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const API_CONFIG = {
     BASE_URL: 'https://jobreviews-production.up.railway.app', 
-    SIGNUP_ENDPOINT: '/api/auth/login'
+    LOGIN_ENDPOINT: '/api/auth/login'
 }
 
 const LoginPage = () => {
@@ -54,7 +54,7 @@ const LoginPage = () => {
         }
         
         try {
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.LOGIN_ENDPOINT}`, {
                 method: 'POST', 
                 headers: {
                     'Content-Type' : 'application/json', 
