@@ -22,6 +22,7 @@ const Reviews = () => {
         const fetchReviews = async () => {
             try{
                 const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.REVIEWS_ENDPOINT}/${encodeURIComponent(decodedCompanyName)}`);
+                const data = await response.json(); 
 
                 if(data.success) {
                     setReviews(data.reviews);
