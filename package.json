@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon --exec tsx script.ts",
+    "start": "node backend/server.js",
+    "build": "cd frontend && npm install && npm run build && cd ../backend && npm install",
     "dev": "nodemon backend/server.js"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "type": "module",
   "keywords": [],
@@ -18,13 +22,5 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2"
-  },
-  "devDependencies": {
-    "@types/node": "^22.13.4",
-    "nodemon": "^3.1.9",
-    "prisma": "^6.3.1",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
   }
 }
