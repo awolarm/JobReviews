@@ -4,6 +4,12 @@ import { Heading, Icon, Flex, Box, SimpleGrid, HStack, Text } from '@chakra-ui/r
 import { FaBuilding } from "react-icons/fa";
 import { CiCalendar } from "react-icons/ci";
 import { FaLocationDot } from "react-icons/fa6";
+
+const API_CONFIG = {
+    BASE_URL: 'https://jobreviews-production.up.railway.app', 
+    REVIEWS_ENDPOINT: '/api/auth/reviews' 
+}
+
 const Reviews = () => {
     const { companyName } = useParams();
     const decodedCompanyName = decodeURIComponent(companyName);
@@ -15,8 +21,7 @@ const Reviews = () => {
     useEffect(() => {
         const fetchReviews = async () => {
             try{
-                const response = await fetch(`/api/auth/reviews/${encodeURIComponent(decodedCompanyName)}`);
-                const data = await response.json(); 
+                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.REVIEWS_ENDPOINT}/${encodeURIComponent(decodedCompanyName)}`);
 
                 if(data.success) {
                     setReviews(data.reviews);

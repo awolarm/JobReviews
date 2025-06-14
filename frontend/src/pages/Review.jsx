@@ -5,8 +5,8 @@ import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control';
 
 const API_CONFIG = {
-    BASE_URL: 'http://localhost:5000', 
-    SIGNUP_ENDPOINT: '/api/auth/review'
+    BASE_URL: 'https://jobreviews-production.up.railway.app', 
+    REVIEW_ENDPOINT: '/api/auth/review'
 }
 
 const Review = () => {
@@ -65,7 +65,7 @@ const Review = () => {
             }
 
 
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.SIGNUP_ENDPOINT}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.REVIEW_ENDPOINT}`, {
                 method: 'POST', 
                 headers: {
                     'Content-Type' : 'application/json', 
