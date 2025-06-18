@@ -1,0 +1,15 @@
+sb.py:52:SB
+--------------------------------------------------------------------
+Last Page: https://www.indeed.com/cmp/target/reviews
+ Duration: 10.66s
+  Browser: Chrome 137.0.7151.105
+   Driver: chromedriver 137.0.7151.68
+Timestamp: 1750279027  (Unix Timestamp)
+     Date: Wednesday, June 18, 2025
+     Time: 4:37:07 PM  (EDT, UTC-04:00)
+--------------------------------------------------------------------
+Traceback:
+  Traceback (most recent call last):
+  File "/Users/jimmypuli/Desktop/MAYHEM/webscraper/sb.py", line 21, in scrape_company_reviews
+    for child in reviewList:
+TypeError: 'NoneType' object is not iterable

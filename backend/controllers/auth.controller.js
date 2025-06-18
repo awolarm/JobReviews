@@ -1,6 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'; 
 import jwt from 'jsonwebtoken';
+import { spawn } from 'child_process';
+import path from 'path';
+import fs from 'fs/promises';
 
 const prisma = new PrismaClient()
 
@@ -115,42 +118,37 @@ export const logout = async (req, res) => {
 }; 
 
 export const getReviewsByCompany = async (req, res) => {
-    try{
-        const {companyName} = req.params; 
-        const companyReviews = await prisma.review.findMany({
-            where: {
-                company: {
-                    equals: companyName,
-                    mode: 'insensitive'
-                }   
-            },
-        }); 
+    try {
+        const { companyName } = req.params;
 
-        if(companyReviews.length === 0) {
-            return res.status(404).json({
-                success: false, 
-                message: "Company not found"
-            });
-        }
+        const pythonProcess = spawn('python3', ['webscraper/sb.py', companyName]);
 
-        const sortedReviews = companyReviews.sort((a, b) => {
-            const dateA = new Date(a.createdAt);
-            const dateB = new Date(b.createdAt);
-            return dateB - dateA; 
+        pythonProcess.on('close', async (code) => {
+            if (code === 0) {
+                const fileContent = await fs.readFile('reviews.json', 'utf8');
+                const reviews = JSON.parse(fileContent);
+                res.status(200).json({
+                    success: true, 
+                    company: companyName, 
+                    reviewCount: reviews.length,
+                    reviews: reviews
+                });    
+            } else {
+                new Error(`Python scraper failed with code ${code}. Error: ${errorString}`);
+            }
         });
+        
+        setTimeout(() => {
+            pythonProcess.kill();
+            reject(new Error('Scraping timeout after 30 seconds'));
+        }, 30000);
+             
+    } catch (error) {
 
-
-        res.status(200).json({
-            success: true, 
-            company: companyName, 
-            reviewCount: companyReviews.length,
-            reviews: sortedReviews
-        }); 
-    }catch(error){
-        console.error("Error fetching reviews:" , error ); 
         res.status(500).json({
             success: false,
-            message: "Server error"
+            message: `Scraping failed: ${error.message}`,
+            error: error.message
         });
     }
 };

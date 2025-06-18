@@ -6,7 +6,7 @@ import { CiCalendar } from "react-icons/ci";
 import { FaLocationDot } from "react-icons/fa6";
 
 const API_CONFIG = {
-    BASE_URL: 'https://jobreviews-production.up.railway.app', 
+    BASE_URL: 'http://localhost:5000', 
     REVIEWS_ENDPOINT: '/api/auth/reviews' 
 }
 
@@ -22,6 +22,7 @@ const Reviews = () => {
         const fetchReviews = async () => {
             try{
                 const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.REVIEWS_ENDPOINT}/${encodeURIComponent(decodedCompanyName)}`);
+                
                 const data = await response.json(); 
 
                 if(data.success) {
@@ -31,7 +32,7 @@ const Reviews = () => {
                 }
             }catch(err){
                 setError('Failed to fetch reviews');
-                console.log('Fetch error', err);
+                console.error(err);
             }finally{
                 setLoading(false)
             }
@@ -60,11 +61,11 @@ const Reviews = () => {
                 <p>No reviews found for this company.</p>
             ) : (
                 <SimpleGrid columns={3} spacing={20} mt={4}>
-                    {reviews.map((review) => (
-                        <Box key={review.id} w='100%' h='600px' border='1px solid #ccc' p={4} borderRadius='md'>
+                    {reviews.map((review, index) => (
+                        <Box key={index} w='100%' h='600px' border='1px solid #ccc' p={4} borderRadius='md'>
                             <HStack>
                                 <Icon as={CiCalendar} boxSize='60px' />
-                                <Text fontSize='3xl'>{review.createdAt}</Text>
+                                <Text fontSize='3xl'>{review.date}</Text>
                             </HStack>
                             <Text fontWeight = 'bold' fontSize='4xl'>{review.title}</Text>
                             <HStack>
