@@ -4,8 +4,10 @@ import jwt from 'jsonwebtoken';
 import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs/promises';
+import { readFile } from 'fs';
 
 const prisma = new PrismaClient()
+const ongoingRequests = new Set();
 
 export const signup = async (req, res) => {
     try {
@@ -117,37 +119,72 @@ export const logout = async (req, res) => {
     })
 }; 
 
+export const start_script = async(company) => {
+    return new Promise((resolve) => {
+        const pythonProcess = spawn('python3', ['webscraper/sb.py', company]);
+        
+        pythonProcess.on('close', async(code) => {
+            if(code === 0) {
+                console.log("success");
+                resolve(undefined);
+            }else{
+                console.log("failure");
+                resolve(undefined);
+            }
+        });
+    });
+};
+
 export const getReviewsByCompany = async (req, res) => {
     try {
         const { companyName } = req.params;
+        console.log(`Getting reviews for: ${companyName}`);
 
-        const pythonProcess = spawn('python3', ['webscraper/sb.py', companyName]);
+        // Check if request is already in progress
+        if (ongoingRequests.has(companyName)) {
+            return res.status(429).json({
+                success: false,
+                message: "Request already in progress for this company"
+            });
+        }
 
-        pythonProcess.on('close', async (code) => {
-            if (code === 0) {
+        // Mark request as ongoing
+        ongoingRequests.add(companyName);
+
+        await start_script(companyName);
+
+        setTimeout(async () => {
+            try {
                 const fileContent = await fs.readFile('reviews.json', 'utf8');
                 const reviews = JSON.parse(fileContent);
+                
+                console.log(`Successfully read ${reviews.length} reviews`);
+                
                 res.status(200).json({
                     success: true, 
-                    company: companyName, 
+                    company: companyName,
                     reviewCount: reviews.length,
                     reviews: reviews
-                });    
-            } else {
-                new Error(`Python scraper failed with code ${code}. Error: ${errorString}`);
+                });     
+            } catch (error) {
+                console.error('File read error:', error);
+                res.status(500).json({
+                    success: false,
+                    message: `Failed to read file: ${error.message}`,
+                    error: error.message
+                });
+            } finally {
+                // Remove from ongoing requests when done
+                ongoingRequests.delete(companyName);
             }
-        });
+        }, 20000);
         
-        setTimeout(() => {
-            pythonProcess.kill();
-            reject(new Error('Scraping timeout after 30 seconds'));
-        }, 30000);
-             
     } catch (error) {
-
+        console.error('Error in getReviewsByCompany:', error);
+        ongoingRequests.delete(companyName); // Clean up on error
         res.status(500).json({
             success: false,
-            message: `Scraping failed: ${error.message}`,
+            message: `Something failed: ${error.message}`,
             error: error.message
         });
     }
