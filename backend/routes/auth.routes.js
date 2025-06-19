@@ -5,7 +5,9 @@ import {
     signup, 
     getReviewsByCompany, 
     createReview, 
-    authenticateToken, } from '../controllers/auth.controller.js'; 
+    authenticateToken,
+    checkReviewsStatus,
+    } from '../controllers/auth.controller.js'; 
 
 const router = express.Router(); 
 
@@ -18,6 +20,8 @@ router.get("/reviews/:companyName", getReviewsByCompany);
 router.post("/logout", authenticateToken, logout);
 
 router.post("/review", authenticateToken, createReview);
+
+router.get('/reviews/:companyName/status', checkReviewsStatus);
 
 
 export default router; 

@@ -19,27 +19,47 @@ const Reviews = () => {
     const [error, setError] = useState(null); 
 
     useEffect(() => {
-        const fetchReviews = async () => {
-            try{
-                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.REVIEWS_ENDPOINT}/${encodeURIComponent(decodedCompanyName)}`);
-                
-                const data = await response.json(); 
-
-                if(data.success) {
-                    setReviews(data.reviews);
-                }else{
-                    setError(data.message);
-                }
-            }catch(err){
-                setError('Failed to fetch reviews');
-                console.error(err);
-            }finally{
-                setLoading(false)
+    const fetchReviews = async () => {
+        try {
+            // Start the process
+            const startResponse = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.REVIEWS_ENDPOINT}/${encodeURIComponent(decodedCompanyName)}`);
+            const startData = await startResponse.json();
+            
+            if (!startData.success) {
+                setError(startData.message);
+                setLoading(false);
+                return;
             }
-        };
 
-        fetchReviews(); 
-    },[decodedCompanyName]);
+            // Poll for results
+            const pollForResults = async () => {
+                try {
+                    const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.REVIEWS_ENDPOINT}/${encodeURIComponent(decodedCompanyName)}/status`);
+                    const data = await response.json();
+                    
+                    if (data.success && data.ready) {
+                        setReviews(data.reviews);
+                        setLoading(false);
+                    } else {
+                        // Not ready yet, poll again in 3 seconds
+                        setTimeout(pollForResults, 3000);
+                    }
+                } catch (err) {
+                    setError('Failed to check status');
+                    setLoading(false);
+                }
+            };
+
+            pollForResults();
+            
+        } catch (err) {
+            setError('Failed to start processing');
+            setLoading(false);
+        }
+    };
+
+    fetchReviews();
+    }, [decodedCompanyName]);
 
     if (loading) return <div>Loading reviews...</div>;
     if (error) return <div>Error: {error}</div>; 

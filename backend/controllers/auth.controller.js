@@ -140,55 +140,77 @@ export const getReviewsByCompany = async (req, res) => {
         const { companyName } = req.params;
         console.log(`Getting reviews for: ${companyName}`);
 
-        // Check if request is already in progress
         if (ongoingRequests.has(companyName)) {
-            return res.status(429).json({
-                success: false,
-                message: "Request already in progress for this company"
+            return res.status(200).json({
+                success: true,
+                processing: true,
+                message: "Already processing this company"
             });
         }
 
-        // Mark request as ongoing
         ongoingRequests.add(companyName);
+        
+        // Start the script but don't wait
+        start_script(companyName).finally(() => {
+            ongoingRequests.delete(companyName);
+        });
 
-        await start_script(companyName);
-
-        setTimeout(async () => {
-            try {
-                const fileContent = await fs.readFile('reviews.json', 'utf8');
-                const reviews = JSON.parse(fileContent);
-                
-                console.log(`Successfully read ${reviews.length} reviews`);
-                
-                res.status(200).json({
-                    success: true, 
-                    company: companyName,
-                    reviewCount: reviews.length,
-                    reviews: reviews
-                });     
-            } catch (error) {
-                console.error('File read error:', error);
-                res.status(500).json({
-                    success: false,
-                    message: `Failed to read file: ${error.message}`,
-                    error: error.message
-                });
-            } finally {
-                // Remove from ongoing requests when done
-                ongoingRequests.delete(companyName);
-            }
-        }, 20000);
+        // Immediately return that processing started
+        res.status(200).json({
+            success: true,
+            processing: true,
+            message: "Processing started"
+        });
         
     } catch (error) {
         console.error('Error in getReviewsByCompany:', error);
-        ongoingRequests.delete(companyName); // Clean up on error
+        ongoingRequests.delete(companyName);
         res.status(500).json({
             success: false,
-            message: `Something failed: ${error.message}`,
-            error: error.message
+            message: `Something failed: ${error.message}`
         });
     }
 };
+
+export const checkReviewsStatus = async (req, res) => {
+    try {
+        const { companyName } = req.params;
+        
+        // Check if file exists and read it
+        try {
+            const fileContent = await fs.readFile('reviews.json', 'utf8');
+            const reviews = JSON.parse(fileContent);
+            
+            // Check if reviews are for the requested company
+            if (reviews.length > 0 && reviews[0].company === companyName) {
+                return res.status(200).json({
+                    success: true,
+                    ready: true,
+                    company: companyName,
+                    reviewCount: reviews.length,
+                    reviews: reviews
+                });
+            }
+        } catch (error) {
+            // File doesn't exist or can't be read
+        }
+        
+        // Not ready yet
+        res.status(200).json({
+            success: true,
+            ready: false,
+            message: "Still processing..."
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error checking status"
+        });
+    }
+};
+
+
 
 export const createReview = async (req, res) => {
     try {

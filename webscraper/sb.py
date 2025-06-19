@@ -12,7 +12,7 @@ def scrape_company_reviews(company_name):
         url = f"https://www.indeed.com/cmp/{encoded_company}/reviews"
         sb.activate_cdp_mode(url)
         sb.uc_gui_click_captcha()
-        sb.sleep(5)
+        sb.sleep(10)
         page_html = sb.get_page_source()
         soup = BeautifulSoup(page_html, 'html.parser')
 
