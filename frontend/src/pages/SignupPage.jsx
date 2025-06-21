@@ -5,7 +5,7 @@ import { FormControl, FormLabel} from '@chakra-ui/form-control';
 import { useNavigate } from 'react-router-dom';
 
 const API_CONFIG = {
-    BASE_URL: 'http://localhost:5000', 
+    BASE_URL: 'https://job-reviews-five.vercel.app', 
     SIGNUP_ENDPOINT: '/api/auth/signup'
 }
 

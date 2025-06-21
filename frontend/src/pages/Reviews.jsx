@@ -6,7 +6,7 @@ import { CiCalendar } from "react-icons/ci";
 import { FaLocationDot } from "react-icons/fa6";
 
 const API_CONFIG = {
-    BASE_URL: 'http://localhost:5000', 
+    BASE_URL: 'https://job-reviews-five.vercel.app', 
     REVIEWS_ENDPOINT: '/api/auth/reviews' 
 }
 
