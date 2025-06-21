@@ -53,7 +53,7 @@ const Reviews = () => {
             pollForResults();
             
         } catch (err) {
-            console.log(err)
+            setError('Failed to start processing');
             setLoading(false);
         }
     };
