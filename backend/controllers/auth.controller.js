@@ -161,11 +161,11 @@ export const getReviewsByCompany = async (req, res) => {
         });
 
         // Immediately return that processing started
-        res.status(200).json({
-            success: true,
-            processing: true,
-            message: "Processing started"
-        });
+        // res.status(200).json({
+        //     success: true,
+        //     processing: true,
+        //     message: "Processing started"
+        // });
         
     } catch (error) {
         console.error('Error in getReviewsByCompany:', error);
