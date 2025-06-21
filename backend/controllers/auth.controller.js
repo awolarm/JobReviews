@@ -153,6 +153,11 @@ export const getReviewsByCompany = async (req, res) => {
         // Start the script but don't wait
         start_script(companyName).finally(() => {
             ongoingRequests.delete(companyName);
+            res.status(200).json({
+                success: true,
+                processing: true,
+                message: "Processing Finished!"
+            })
         });
 
         // Immediately return that processing started
