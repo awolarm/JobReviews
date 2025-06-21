@@ -5,7 +5,7 @@ import { useColorModeValue } from '@chakra-ui/color-mode';
 import { FormControl, FormLabel} from '@chakra-ui/form-control';
 
 const API_CONFIG = {
-    BASE_URL: 'http://localhost:5000', 
+    BASE_URL: 'https://job-reviews-five.vercel.app', 
     REVIEW_ENDPOINT: '/api/auth/review'
 }
 
