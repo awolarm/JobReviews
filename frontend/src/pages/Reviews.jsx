@@ -6,7 +6,7 @@ import { CiCalendar } from "react-icons/ci";
 import { FaLocationDot } from "react-icons/fa6";
 
 const API_CONFIG = {
-    BASE_URL: 'https://jobreviews-production.up.railway.app', 
+    BASE_URL: '', 
     REVIEWS_ENDPOINT: '/api/auth/reviews' 
 }
 
@@ -53,7 +53,7 @@ const Reviews = () => {
             pollForResults();
             
         } catch (err) {
-            //setError('Failed to start processing');
+            console.log(err)
             setLoading(false);
         }
     };
