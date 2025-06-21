@@ -192,7 +192,9 @@ export const checkReviewsStatus = async (req, res) => {
                 });
             }
         } catch (error) {
-            // File doesn't exist or can't be read
+            res.status(500).json({
+                message: error.message, 
+            })
         }
         
         // Not ready yet
