@@ -11,7 +11,7 @@ const HomePage = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         if(companyName.trim()){
-            navigate(`/reviews/${encodeURIComponent(companyName)}`)
+            navigate(`/reviews/${encodeURIComponent(companyName.trim())}`)
         }
     }
 

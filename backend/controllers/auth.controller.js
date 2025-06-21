@@ -1,8 +1,13 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'; 
 import jwt from 'jsonwebtoken';
+import { spawn } from 'child_process';
+import path from 'path';
+import fs from 'fs/promises';
+import { readFile } from 'fs';
 
 const prisma = new PrismaClient()
+const ongoingRequests = new Set();
 
 export const signup = async (req, res) => {
     try {
@@ -114,46 +119,98 @@ export const logout = async (req, res) => {
     })
 }; 
 
-export const getReviewsByCompany = async (req, res) => {
-    try{
-        const {companyName} = req.params; 
-        const companyReviews = await prisma.review.findMany({
-            where: {
-                company: {
-                    equals: companyName,
-                    mode: 'insensitive'
-                }   
-            },
-        }); 
+export const start_script = async(company) => {
+    return new Promise((resolve) => {
+        const pythonProcess = spawn('python3', ['webscraper/sb.py', company]);
+        
+        pythonProcess.on('close', async(code) => {
+            if(code === 0) {
+                console.log("success");
+                resolve(undefined);
+            }else{
+                console.log("failure");
+                resolve(undefined);
+            }
+        });
+    });
+};
 
-        if(companyReviews.length === 0) {
-            return res.status(404).json({
-                success: false, 
-                message: "Company not found"
+export const getReviewsByCompany = async (req, res) => {
+    try {
+        const { companyName } = req.params;
+        console.log(`Getting reviews for: ${companyName}`);
+
+        if (ongoingRequests.has(companyName)) {
+            return res.status(200).json({
+                success: true,
+                processing: true,
+                message: "Already processing this company"
             });
         }
 
-        const sortedReviews = companyReviews.sort((a, b) => {
-            const dateA = new Date(a.createdAt);
-            const dateB = new Date(b.createdAt);
-            return dateB - dateA; 
+        ongoingRequests.add(companyName);
+        
+        // Start the script but don't wait
+        start_script(companyName).finally(() => {
+            ongoingRequests.delete(companyName);
         });
 
-
+        // Immediately return that processing started
         res.status(200).json({
-            success: true, 
-            company: companyName, 
-            reviewCount: companyReviews.length,
-            reviews: sortedReviews
-        }); 
-    }catch(error){
-        console.error("Error fetching reviews:" , error ); 
+            success: true,
+            processing: true,
+            message: "Processing started"
+        });
+        
+    } catch (error) {
+        console.error('Error in getReviewsByCompany:', error);
+        ongoingRequests.delete(companyName);
         res.status(500).json({
             success: false,
-            message: "Server error"
+            message: `Something failed: ${error.message}`
         });
     }
 };
+
+export const checkReviewsStatus = async (req, res) => {
+    try {
+        const { companyName } = req.params;
+        
+        // Check if file exists and read it
+        try {
+            const fileContent = await fs.readFile('reviews.json', 'utf8');
+            const reviews = JSON.parse(fileContent);
+            
+            // Check if reviews are for the requested company
+            if (reviews.length > 0 && reviews[0].company === companyName) {
+                return res.status(200).json({
+                    success: true,
+                    ready: true,
+                    company: companyName,
+                    reviewCount: reviews.length,
+                    reviews: reviews
+                });
+            }
+        } catch (error) {
+            // File doesn't exist or can't be read
+        }
+        
+        // Not ready yet
+        res.status(200).json({
+            success: true,
+            ready: false,
+            message: "Still processing..."
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error checking status"
+        });
+    }
+};
+
+
 
 export const createReview = async (req, res) => {
     try {

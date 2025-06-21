@@ -5,7 +5,7 @@ import { FormControl, FormLabel} from '@chakra-ui/form-control';
 import { useNavigate } from 'react-router-dom';
 
 const API_CONFIG = {
-    BASE_URL: 'https://jobreviews-production.up.railway.app', 
+    BASE_URL: 'http://localhost:5000', 
     LOGIN_ENDPOINT: '/api/auth/login'
 }
 
