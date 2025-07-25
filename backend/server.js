@@ -8,7 +8,7 @@ dotenv.config();
 const app = express(); 
 
 app.use(cors({
-    origin: 'https://job-reviews-five.vercel.app', // Your Vite frontend URL
+    origin: 'http://localhost:5173', // Your Vite frontend URL
     credentials: true
 }));
 

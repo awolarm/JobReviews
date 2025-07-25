@@ -162,17 +162,18 @@ export const getReviewsByCompany = async (req, res) => {
 
         // Immediately return that processing started
         res.status(200).json({
-            success: true,
-            processing: true,
-            message: "Processing started"
+        success: true,
+        processing: true,
+        message: "Processing started"
         });
         
     } catch (error) {
         console.error('Error in getReviewsByCompany:', error);
         ongoingRequests.delete(companyName);
+        
         res.status(500).json({
-            success: false,
-            message: `Something failed: ${error.message}`
+        success: false,
+        message: `Something failed: ${error.message}`
         });
     }
 };

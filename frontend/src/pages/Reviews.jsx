@@ -6,7 +6,8 @@ import { CiCalendar } from "react-icons/ci";
 import { FaLocationDot } from "react-icons/fa6";
 
 const API_CONFIG = {
-    BASE_URL: 'https://jobreviews-production.up.railway.app', 
+    BASE_URL: 'http://localhost:5000', // Change this to your backend URL if needed
+    // BASE_URL: 'https://job-reviews-five.vercel.app', // Use this
     REVIEWS_ENDPOINT: '/api/auth/reviews' 
 }
 
@@ -45,7 +46,7 @@ const Reviews = () => {
                         setTimeout(pollForResults, 3000);
                     }
                 } catch (err) {
-                    setError('Failed to check status');
+                    setError('Error fetching reviews');
                     setLoading(false);
                 }
             };
